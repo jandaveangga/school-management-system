@@ -1,0 +1,50 @@
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  padding: var(--space-12) var(--space-6);
+  gap: var(--space-3);
+
+  color: var(--color-fg-muted);
+}
+
+/* ─── Icon ─────────────────────────────────────────────── */
+
+.empty-state__icon {
+  width: 4rem;
+  height: 4rem;
+
+  display: grid;
+  place-items: center;
+
+  margin-bottom: var(--space-2);
+
+  border-radius: var(--radius-full);
+  background: var(--color-bg-muted);
+  color: var(--color-fg-subtle);
+}
+
+/* ─── Text ─────────────────────────────────────────────── */
+
+.empty-state__title {
+  margin: 0;
+
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-fg);
+}
+
+.empty-state__description {
+  margin: 0;
+
+  font-size: var(--font-size-sm);
+  max-width: 28rem;
+}
+
+/* ─── Action ───────────────────────────────────────────── */
+
+.empty-state__action {
+  margin-top: var(--space-3);
+}

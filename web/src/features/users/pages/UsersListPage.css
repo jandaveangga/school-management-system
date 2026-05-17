@@ -1,0 +1,32 @@
+.users-list__filters {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.users-list__filters-search {
+  min-width: 0;
+}
+
+.users-list__filters-control {
+  width: 12rem;
+}
+
+.users-list__panel {
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+@media (max-width: 768px) {
+  .users-list__filters {
+    grid-template-columns: 1fr;
+  }
+
+  .users-list__filters-control {
+    width: 100%;
+  }
+}

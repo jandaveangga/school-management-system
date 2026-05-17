@@ -1,0 +1,241 @@
+.data-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* ────────────────────────────────────────────────────────────
+   TABLE
+──────────────────────────────────────────────────────────── */
+
+.data-table {
+  width: 100%;
+
+  border-collapse: separate;
+  border-spacing: 0;
+
+  font-size: var(--font-size-sm);
+}
+
+/* ────────────────────────────────────────────────────────────
+   CELLS
+──────────────────────────────────────────────────────────── */
+
+.data-table__th,
+.data-table__td {
+  padding: var(--space-3) var(--space-4);
+
+  border-bottom: 1px solid var(--color-border);
+
+  text-align: left;
+  vertical-align: middle;
+}
+
+/* ────────────────────────────────────────────────────────────
+   HEADER
+──────────────────────────────────────────────────────────── */
+
+.data-table__th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+
+  background-color: var(--color-bg-muted);
+
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+
+  color: var(--color-fg-muted);
+
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ────────────────────────────────────────────────────────────
+   ALIGNMENT MODIFIERS
+──────────────────────────────────────────────────────────── */
+
+.data-table__th--right,
+.data-table__td--right {
+  text-align: right;
+}
+
+.data-table__th--center,
+.data-table__td--center {
+  text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────────
+   ROWS
+──────────────────────────────────────────────────────────── */
+
+.data-table__row {
+  transition:
+    background-color var(--duration-fast)
+      var(--easing-standard);
+}
+
+.data-table__row:hover {
+  background-color: var(--color-bg-muted);
+}
+
+.data-table__row--clickable {
+  cursor: pointer;
+}
+
+/* ────────────────────────────────────────────────────────────
+   SORT BUTTON
+──────────────────────────────────────────────────────────── */
+
+.data-table__sort-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+
+  padding: 0;
+
+  font-size: inherit;
+  font-weight: inherit;
+
+  color: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+
+  user-select: none;
+}
+
+.data-table__sort-button:hover {
+  color: var(--color-fg);
+}
+
+/* ────────────────────────────────────────────────────────────
+   EMPTY / LOADING STATE
+──────────────────────────────────────────────────────────── */
+
+.data-table__state {
+  display: grid;
+  place-items: center;
+
+  min-height: 16rem;
+
+  padding: var(--space-8);
+}.data-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* ────────────────────────────────────────────────────────────
+   TABLE
+──────────────────────────────────────────────────────────── */
+
+.data-table {
+  width: 100%;
+
+  border-collapse: separate;
+  border-spacing: 0;
+
+  font-size: var(--font-size-sm);
+}
+
+/* ────────────────────────────────────────────────────────────
+   CELLS
+──────────────────────────────────────────────────────────── */
+
+.data-table__th,
+.data-table__td {
+  padding: var(--space-3) var(--space-4);
+
+  border-bottom: 1px solid var(--color-border);
+
+  text-align: left;
+  vertical-align: middle;
+}
+
+/* ────────────────────────────────────────────────────────────
+   HEADER
+──────────────────────────────────────────────────────────── */
+
+.data-table__th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+
+  background-color: var(--color-bg-muted);
+
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+
+  color: var(--color-fg-muted);
+
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ────────────────────────────────────────────────────────────
+   ALIGNMENT MODIFIERS
+──────────────────────────────────────────────────────────── */
+
+.data-table__th--right,
+.data-table__td--right {
+  text-align: right;
+}
+
+.data-table__th--center,
+.data-table__td--center {
+  text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────────
+   ROWS
+──────────────────────────────────────────────────────────── */
+
+.data-table__row {
+  transition:
+    background-color var(--duration-fast)
+      var(--easing-standard);
+}
+
+.data-table__row:hover {
+  background-color: var(--color-bg-muted);
+}
+
+.data-table__row--clickable {
+  cursor: pointer;
+}
+
+/* ────────────────────────────────────────────────────────────
+   SORT BUTTON
+──────────────────────────────────────────────────────────── */
+
+.data-table__sort-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+
+  padding: 0;
+
+  font-size: inherit;
+  font-weight: inherit;
+
+  color: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+
+  user-select: none;
+}
+
+.data-table__sort-button:hover {
+  color: var(--color-fg);
+}
+
+/* ────────────────────────────────────────────────────────────
+   EMPTY / LOADING STATE
+──────────────────────────────────────────────────────────── */
+
+.data-table__state {
+  display: grid;
+  place-items: center;
+
+  min-height: 16rem;
+
+  padding: var(--space-8);
+}

@@ -1,0 +1,65 @@
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.profile-section__details {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-muted);
+}
+
+.profile-section__details > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: var(--space-3) var(--space-4);
+
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  list-style: none;
+}
+
+.profile-section__details > summary::-webkit-details-marker {
+  display: none;
+}
+
+.profile-section__details > summary::after {
+  content: '⌄';
+  color: var(--color-fg-muted);
+
+  transition:
+    transform var(--duration-fast)
+    var(--easing-standard);
+}
+
+.profile-section__details[open] > summary::after {
+  transform: rotate(180deg);
+}
+
+.profile-section__panel {
+  padding: var(--space-4);
+
+  border-top: 1px solid var(--color-border);
+  background: var(--color-bg-elevated);
+}
+
+.profile-section__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.profile-section__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+@media (max-width: 640px) {
+  .profile-section__row {
+    grid-template-columns: 1fr;
+  }
+}

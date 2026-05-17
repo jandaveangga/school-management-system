@@ -1,0 +1,327 @@
+// =====================================================================
+// School Management System — Prisma Schema (Phase 2)
+// =====================================================================
+//
+// Conventions:
+// - PKs: UUID v7 (time-ordered, native )
+// - Tables: snake_case via @@map
+// - Columns: camelCase (matches Prisma model API)
+// - Soft delete: deletedAt column
+// - Audit fields: createdAt / updatedAt
+// - Email: lowercased VARCHAR(254)
+//
+// =====================================================================
+// GENERATOR & DATASOURCE
+// =====================================================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+
+// =====================================================================
+// ENUMS
+// =====================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+// =====================================================================
+// IDENTITY / RBAC
+// =====================================================================
+
+model User {
+  id              String    @id @default(uuid(7)) 
+  email           String    @unique 
+  passwordHash    String
+  firstName       String    
+  lastName        String    
+  phone           String?   
+  isActive        Boolean   @default(true)
+  emailVerifiedAt DateTime?
+  lastLoginAt     DateTime?
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  userRoles          UserRole[]
+  refreshTokens      RefreshToken[]
+  studentProfile     Student?
+  teacherProfile     Teacher?
+  recordedAttendance Attendance[] @relation("AttendanceRecorder")
+  recordedGrades     Grade[]      @relation("GradeRecorder")
+
+  @@index([deletedAt])
+  @@index([isActive])
+  @@map("users")
+}
+
+model Role {
+  id          String   @id @default(uuid(7)) 
+  name String @unique
+  description String?
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  userRoles UserRole[]
+
+  @@index([deletedAt])
+  @@map("roles")
+}
+
+// M:N join table
+
+model UserRole {
+  userId     String   
+  roleId     String   
+  assignedAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role Role @relation(fields: [roleId], references: [id], onDelete: Restrict)
+
+  @@id([userId, roleId])
+  @@index([roleId])
+  @@map("user_roles")
+}
+
+model RefreshToken {
+  id           String    @id @default(uuid(7)) 
+  userId       String    
+  tokenHash    String    @unique
+  expiresAt    DateTime
+  revokedAt    DateTime?
+  replacedById String?   
+  userAgent    String?   
+  ipAddress    String?   
+
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("refresh_tokens")
+}
+
+// =====================================================================
+// PROFILES
+// =====================================================================
+
+model Student {
+  id              String    @id @default(uuid(7)) 
+  userId          String    @unique 
+  studentNumber   String    @unique 
+  dateOfBirth     DateTime? 
+  gender String?
+  enrollmentDate  DateTime  @default(now()) 
+  guardianName    String?   
+  guardianPhone   String?   
+  guardianEmail   String?   
+  address         String?
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  enrollments  Enrollment[]
+  attendances  Attendance[]
+  grades       Grade[]
+
+  @@index([deletedAt])
+  @@map("students")
+}
+
+model Teacher {
+  id             String   @id @default(uuid(7)) 
+  userId         String   @unique 
+  employeeNumber String   @unique 
+  hireDate       DateTime @default(now()) 
+  department     String?  
+  qualification  String?  
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  homeroomClasses Class[]   @relation("HomeroomTeacher")
+  subjects        Subject[] @relation("SubjectTeacher")
+
+  @@index([deletedAt])
+  @@index([department])
+  @@map("teachers")
+}
+
+// =====================================================================
+// ACADEMIC STRUCTURE
+// =====================================================================
+
+model Class {
+  id                String  @id @default(uuid(7)) 
+  name              String  
+  gradeLevel        Int
+  academicYear      String  
+  homeroomTeacherId String? 
+  capacity          Int?
+  room              String? 
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  homeroomTeacher Teacher? @relation("HomeroomTeacher", fields: [homeroomTeacherId], references: [id], onDelete: SetNull)
+
+  enrollments Enrollment[]
+  attendances Attendance[]
+
+  @@unique([name, academicYear])
+  @@index([deletedAt])
+  @@index([academicYear])
+  @@index([gradeLevel])
+  @@index([homeroomTeacherId])
+  @@map("classes")
+}
+
+model Subject {
+  id          String  @id @default(uuid(7)) 
+  code        String  @unique 
+  name        String  
+  description String?
+  credits     Int?
+  teacherId   String? 
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  teacher Teacher? @relation("SubjectTeacher", fields: [teacherId], references: [id], onDelete: SetNull)
+
+  grades Grade[]
+
+  @@index([deletedAt])
+  @@index([teacherId])
+  @@map("subjects")
+}
+
+// =====================================================================
+// ENROLLMENTS / ATTENDANCE / GRADES
+// =====================================================================
+
+model Enrollment {
+  id           String           @id @default(uuid(7)) 
+  studentId    String           
+  classId      String           
+  academicYear String           
+  status String @default("ACTIVE")
+  enrolledAt   DateTime         @default(now())
+  withdrawnAt  DateTime?
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  class   Class   @relation(fields: [classId], references: [id], onDelete: Restrict)
+
+  @@unique([studentId, classId, academicYear])
+  @@index([classId])
+  @@index([studentId])
+  @@index([deletedAt])
+  @@index([status])
+  @@map("enrollments")
+}
+
+model Attendance {
+  id           String           @id @default(uuid(7)) 
+  studentId    String           
+  classId      String           
+  date         DateTime         
+  status String
+  notes        String?
+  recordedById String           
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  class Class @relation(fields: [classId], references: [id], onDelete: Restrict)
+
+  recordedBy User @relation("AttendanceRecorder", fields: [recordedById], references: [id], onDelete: Restrict)
+
+  @@unique([studentId, classId, date])
+  @@index([classId, date])
+  @@index([studentId, date])
+  @@index([deletedAt])
+  @@index([recordedById])
+  @@map("attendance")
+}
+
+model Grade {
+  id           String    @id @default(uuid(7)) 
+  studentId    String    
+  subjectId    String    
+  type String
+  term String
+  academicYear String    
+  score        Decimal   
+  maxScore     Decimal   
+  weight       Decimal?  
+  remarks      String?
+  recordedById String    
+  recordedAt   DateTime  @default(now())
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  subject Subject @relation(fields: [subjectId], references: [id], onDelete: Restrict)
+
+  recordedBy User @relation("GradeRecorder", fields: [recordedById], references: [id], onDelete: Restrict)
+
+  @@index([studentId, subjectId, term, academicYear])
+  @@index([subjectId])
+  @@index([recordedById])
+  @@index([deletedAt])
+  @@index([recordedAt])
+  @@map("grades")
+}
+
+// =====================================================================
+// IDEMPOTENCY
+// =====================================================================
+
+model IdempotencyKey {
+  key            String   @id 
+  scope          String   
+  userId         String?  
+  requestHash    String   
+  responseStatus Int
+  responseBody   Json?
+  createdAt      DateTime @default(now())
+  expiresAt      DateTime
+
+  @@index([expiresAt])
+  @@index([scope, userId])
+  @@map("idempotency_keys")
+}

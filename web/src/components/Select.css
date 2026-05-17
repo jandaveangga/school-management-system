@@ -1,0 +1,55 @@
+.select-wrapper {
+  position: relative;
+  display: inline-flex;
+  width: 100%;
+}
+
+.select {
+  appearance: none;
+  display: block;
+  width: 100%;
+  padding: var(--space-2) var(--space-8) var(--space-2) var(--space-3);
+  font-family: inherit;
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  color: var(--color-fg);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+
+  transition:
+    border-color var(--duration-fast) var(--easing-standard),
+    box-shadow var(--duration-fast) var(--easing-standard);
+}
+
+.select:hover:not(:disabled) {
+  border-color: var(--color-fg-muted);
+}
+
+.select:focus,
+.select:focus-visible {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-focus);
+}
+
+.select:disabled {
+  background: var(--color-bg-muted);
+  color: var(--color-fg-muted);
+  cursor: not-allowed;
+}
+
+.select--invalid,
+.select--invalid:hover:not(:disabled) {
+  border-color: var(--color-danger);
+}
+
+.select-wrapper__caret {
+  position: absolute;
+  top: 50%;
+  right: var(--space-3);
+  transform: translateY(-50%);
+  color: var(--color-fg-muted);
+  pointer-events: none;
+}

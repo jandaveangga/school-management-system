@@ -1,0 +1,22 @@
+.search-input {
+  position: relative;
+  display: inline-flex;
+  width: 100%;
+}
+
+.search-input__icon {
+  position: absolute;
+  top: 50%;
+  left: var(--space-3);
+  transform: translateY(-50%);
+  color: var(--color-fg-muted);
+  pointer-events: none;
+}
+
+.search-input__field {
+  padding-left: 2.5rem;
+}
+
+.search-input__field::-webkit-search-cancel-button {
+  cursor: pointer;
+}

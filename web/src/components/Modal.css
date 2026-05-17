@@ -1,0 +1,138 @@
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+
+  display: grid;
+  place-items: center;
+
+  padding: var(--space-4);
+
+  background: rgb(0 0 0 / 0.5);
+  backdrop-filter: blur(2px);
+
+  z-index: var(--z-modal);
+
+  animation: modal-backdrop-in var(--duration-base) var(--easing-standard);
+}
+
+/* ─── Modal container ─────────────────────────────────── */
+
+.modal {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  max-height: calc(100vh - 2rem);
+
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+
+  animation: modal-in var(--duration-base) var(--easing-standard);
+}
+
+/* Sizes */
+.modal--sm {
+  max-width: 24rem;
+}
+
+.modal--md {
+  max-width: 32rem;
+}
+
+.modal--lg {
+  max-width: 48rem;
+}
+
+/* ─── Header ───────────────────────────────────────────── */
+
+.modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+
+  padding: var(--space-5) var(--space-5) var(--space-3);
+
+  border-bottom: 1px solid var(--color-border);
+}
+
+.modal__title {
+  margin: 0;
+
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+}
+
+.modal__description {
+  margin: var(--space-1) 0 0;
+
+  font-size: var(--font-size-sm);
+  color: var(--color-fg-muted);
+}
+
+/* Close button */
+.modal__close {
+  display: grid;
+  place-items: center;
+
+  width: 2rem;
+  height: 2rem;
+
+  flex-shrink: 0;
+
+  border-radius: var(--radius-sm);
+  color: var(--color-fg-muted);
+
+  transition:
+    background-color var(--duration-fast) var(--easing-standard),
+    color var(--duration-fast) var(--easing-standard);
+}
+
+.modal__close:hover {
+  background: var(--color-bg-muted);
+  color: var(--color-fg);
+}
+
+/* ─── Body & Footer ────────────────────────────────────── */
+
+.modal__body {
+  flex: 1;
+  overflow-y: auto;
+
+  padding: var(--space-5);
+}
+
+.modal__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-2);
+
+  padding: var(--space-3) var(--space-5) var(--space-4);
+
+  border-top: 1px solid var(--color-border);
+}
+
+/* ─── Animations ───────────────────────────────────────── */
+
+@keyframes modal-backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
