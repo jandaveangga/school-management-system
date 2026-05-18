@@ -19,6 +19,12 @@ import {
   UsersListPage,
 } from '@/features/users';
 
+import { StudentsListPage } from '@/features/students';
+import { TeachersListPage } from '@/features/teachers';
+import { ClassesListPage } from '@/features/classes';
+import { AttendanceListPage } from '@/features/attendance';
+import { GradesListPage } from '@/features/grades';
+
 import { DashboardPlaceholder } from './DashboardPlaceholder';
 import { NotFoundPage } from './NotFoundPage';
 
@@ -180,9 +186,7 @@ export const router = createBrowserRouter([
           {
             path: 'teachers',
             loader: requireRolesLoader('ADMIN'),
-            element: (
-              <FeaturePlaceholder name="Teachers" />
-            ),
+            element: <TeachersListPage />,
           },
 
           /* ───────────────────────────────────────────────────
@@ -195,9 +199,7 @@ export const router = createBrowserRouter([
               'ADMIN',
               'TEACHER',
             ),
-            element: (
-              <FeaturePlaceholder name="Students" />
-            ),
+            element: <StudentsListPage />,
           },
 
           {
@@ -206,9 +208,7 @@ export const router = createBrowserRouter([
               'ADMIN',
               'TEACHER',
             ),
-            element: (
-              <FeaturePlaceholder name="Classes" />
-            ),
+            element: <ClassesListPage />,
           },
 
           {
@@ -217,9 +217,7 @@ export const router = createBrowserRouter([
               'ADMIN',
               'TEACHER',
             ),
-            element: (
-              <FeaturePlaceholder name="Attendance" />
-            ),
+            element: <AttendanceListPage />,
           },
 
           /* ───────────────────────────────────────────────────
@@ -228,9 +226,7 @@ export const router = createBrowserRouter([
 
           {
             path: 'grades',
-            element: (
-              <FeaturePlaceholder name="Grades" />
-            ),
+            element: <GradesListPage />,
           },
         ],
       },
